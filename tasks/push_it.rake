@@ -5,13 +5,13 @@ namespace :wombat do
   task :push_it => :environment do
 
     if Spree::Wombat::Config[:connection_token] == "YOUR TOKEN" || Spree::Wombat::Config[:connection_id] == "YOUR CONNECTION ID"
-      abort("[ERROR] It looks like you did not add your Wombat credentails to config/intializers/wombat.rb, please add them and try again. Exiting now")
+      abort("[ERROR] It looks like you did not add your credentails to config/intializers/wombat.rb, please add them and try again. Exiting now")
     end
     puts "\n\n"
-    puts "Starting pushing objects to Wombat"
+    puts "Starting pushing objects"
     Spree::Wombat::Config[:push_objects].each do |object|
       objects_pushed_count = Spree::Wombat::Client.push_batches(object)
-      puts "Pushed #{objects_pushed_count} #{object} to Wombat"
+      puts "Pushed #{object}"
     end
   end
 end
