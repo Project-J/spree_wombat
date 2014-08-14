@@ -5,6 +5,9 @@ gem 'spree', github: 'spree/spree', branch: "2-3-stable"
 gem 'coffee-rails', '~> 4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 
+# For RabbitMQ
+gem 'bunny'
+
 gem 'pg'
 
 group :test do
