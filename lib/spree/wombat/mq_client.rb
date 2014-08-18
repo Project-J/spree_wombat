@@ -35,14 +35,8 @@ module Spree
         @conn.start
         ex.publish json_payload, :content_type => 'application/json'
         @conn.stop
-        validate(res)
-      end
 
-      def self.validate(res)
-        raise PushApiError, "Push not successful. Wombat returned response code #{res.code} and message: #{res.body}" if res.code != 202
       end
     end
   end
 end
-
-class PushApiError < StandardError; end
