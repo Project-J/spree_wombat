@@ -16,11 +16,11 @@ module Spree
 
       def self.push(json_payload)
         options = {
-            :headers => {
-              :'Content-Type' => 'application/json',
-              :'X-Hub-Store' => Spree::Wombat::Config[:connection_id],
-              :'X-Hub-Access-Token' => Spree::Wombat::Config[:connection_token],
-              :'X-Hub-Timestamp' => Time.now.utc.to_i.to_s
+          :headers => {
+            :'Content-Type' => 'application/json',
+            :'X-Hub-Store' => Spree::Wombat::Config[:connection_id],
+            :'X-Hub-Access-Token' => Spree::Wombat::Config[:connection_token],
+            :'X-Hub-Timestamp' => Time.now.utc.to_i.to_s
           },
           :body => json_payload
         }
