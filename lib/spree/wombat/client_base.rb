@@ -43,10 +43,6 @@ module Spree
         raise NoMethodError
       end
 
-      def self.validate(res)
-        raise NoMethodError
-      end
-
       private
       def self.touch_last_pushed(object)
         last_pushed_ts = Spree::Wombat::Config[:last_pushed_timestamps]
