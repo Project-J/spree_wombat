@@ -15,7 +15,7 @@ module Spree
       end
 
       def self.push(json_payload)
-        payload = {
+        options = {
             :headers => {
               :'Content-Type' => 'application/json',
               :'X-Hub-Store' => Spree::Wombat::Config[:connection_id],
@@ -24,7 +24,7 @@ module Spree
           },
           :body => json_payload
         }
-        res = HTTParty.post(Spree::Wombat::Config[:push_url], payload)
+        res = HTTParty.post(Spree::Wombat::Config[:push_url], options=options)
         validate(res)
       end
 
