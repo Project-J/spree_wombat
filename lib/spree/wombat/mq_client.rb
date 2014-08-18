@@ -8,9 +8,13 @@ module Spree
   module Wombat
     class MqClient < ClientBase
 
-      def initialize
-        super
-        @conn = Bunny.new(ENV['RABBITMQ_BIGWIG_TX_URL'])
+      def initialize(object)
+        super(object)
+        if ENV.has_key?('RABBITMQ_BIGWIG_TX_URL')
+          @conn = Bunny.new(ENV['RABBITMQ_BIGWIG_TX_URL'])
+          return
+        end
+        @conn = Bunny.new
       end
 
       def self.push_batches(object)
