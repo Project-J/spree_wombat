@@ -6,7 +6,7 @@ module Spree
     class ClientBase
 
       def set_constraints(object)
-        now = Time.now
+        now = Time.zone.now
         @last_push_time = Spree::Wombat::Config[:last_pushed_timestamps][object] || now - 1.hour
         @push_start_time = now
         @payload_builder = Spree::Wombat::Config[:payload_builder][object]
