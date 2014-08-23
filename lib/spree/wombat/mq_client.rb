@@ -32,7 +32,7 @@ module Spree
       end
 
       def get_exchange(object)
-        @conn.queue('ProjectJ::' + object)
+        @conn.queue(Spree::Wombat::Config[:queue_prefix] + object)
       end
 
       def push(json_payload)
