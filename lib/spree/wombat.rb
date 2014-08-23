@@ -5,6 +5,7 @@ module Spree
   end
 end
 
+require 'spree/wombat/mq_client'
 require 'spree/wombat/client'
 require 'spree/wombat/client_base'
 require 'spree/wombat/engine'

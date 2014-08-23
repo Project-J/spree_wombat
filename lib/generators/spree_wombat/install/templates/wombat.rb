@@ -1,5 +1,6 @@
 Spree::Wombat::Config.configure do |config|
 
+  config.connection_token = 'http'
   config.connection_token = "YOUR TOKEN"
   config.connection_id = "YOUR CONNECTION ID"
 

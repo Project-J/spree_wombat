@@ -8,13 +8,13 @@ module Spree
   module Wombat
     class Client < ClientBase
 
-      def self.push_batches(object)
+      def push_batches(object)
         self.get_items(object) do |item_json|
           push item_json
         end
       end
 
-      def self.push(json_payload)
+      def push(json_payload)
         options = {
           :headers => {
             :'Content-Type' => 'application/json',
@@ -26,6 +26,7 @@ module Spree
         }
         res = HTTParty.post(Spree::Wombat::Config[:push_url], options=options)
         validate(res)
+        update_last_pushed(object)
       end
 
       def self.validate(res)

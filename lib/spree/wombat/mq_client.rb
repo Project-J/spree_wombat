@@ -8,8 +8,7 @@ module Spree
   module Wombat
     class MqClient < ClientBase
 
-      def initialize(object)
-        super(object)
+      def initialize
         if ENV.has_key?('RABBITMQ_BIGWIG_TX_URL')
           @conn = Bunny.new(ENV['RABBITMQ_BIGWIG_TX_URL'])
           return
@@ -17,25 +16,30 @@ module Spree
         @conn = Bunny.new
       end
 
-      def self.push_batches(object)
-        ex = get_exchange(object)
+      def push_batches(object)
+        items = get_items(object)
+        unless items.any?
+          update_last_pushed(object)
+          return
+        end
         @conn.start
-        self.get_items(object) do |item_json|
+        ex = get_exchange(object)
+        items.each do |item_json|
           ex.publish item_json, :content_type => 'application/json'
         end
         @conn.stop
+        update_last_pushed(object)
       end
 
-      def self.get_exchange(object)
-        @conn.exchange('projectj.spree.' + object.class.name)
+      def get_exchange(object)
+        @conn.queue('ProjectJ::' + object)
       end
 
-      def self.push(json_payload)
+      def push(json_payload)
         ex = get_exchange(object)
         @conn.start
         ex.publish json_payload, :content_type => 'application/json'
         @conn.stop
-
       end
     end
   end
