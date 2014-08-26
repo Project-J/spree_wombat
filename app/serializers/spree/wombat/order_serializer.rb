@@ -13,6 +13,8 @@ module Spree
       has_one :shipping_address, serializer: Spree::Wombat::AddressSerializer
       has_one :billing_address, serializer: Spree::Wombat::AddressSerializer
 
+      has_one :user, serializer: Spree::Wombat::UserSerializer
+
       def id
         object.number
       end

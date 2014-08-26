@@ -4,7 +4,12 @@ module Spree
   module Wombat
     describe OrderSerializer do
 
-      let!(:order) { create(:shipped_order) }
+      let(:user) { create(:user) }
+      let!(:order) { create(:shipped_order, :user => user) }
+      let(:serialized_user) { JSON.parse (UserSerializer.new(user, :root => false).to_json) }
+      let(:serialized_order_no_user) {
+        JSON.parse(OrderSerializer.new(create(:shipped_order_no_user), root: false).to_json)
+      }
 
       let(:serialized_order) do
         JSON.parse(OrderSerializer.new(order, root: false).to_json)
@@ -26,6 +31,14 @@ module Spree
 
         it "set's the placed_on to completed_at date in ISO format" do
           expect(serialized_order["placed_on"]).to match /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/
+        end
+
+        it "checks user is associated with order" do
+          expect(serialized_order["user"]).to eql serialized_user
+        end
+
+        it "checks no user is associated with order" do
+          expect(serialized_order_no_user["user"]).to eql nil
         end
 
         context "totals" do
